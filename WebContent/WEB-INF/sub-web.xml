@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sun-web-app error-url="">
+	<resource-ref>
+		<res-ref-name>jdbc/test-ds</res-ref-name>
+		<jndi-name>jdbc/test-ds</jndi-name>
+	</resource-ref>
+</sun-web-app>

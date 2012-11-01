@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glassfish-services>
+
+	<service-description name="SimpleScaleApplication" init-type="lazy">
+	  <characteristics>
+	    <characteristic name="service-type" value="JavaEE"/>
+	  </characteristics>
+	  <configurations>
+	    <configuration name="min.clustersize" value="1"/>
+	    <configuration name="max.clustersize" value="3"/>
+	  </configurations>
+	</service-description>
+
+	<!--  load balancer werkt alleen als hier van tevoren al het template voor is gemaakt:
+	asadmin create-template (2x)-indexes ServiceType=LB,VirtualizationType=Native LBNative -->
+	<service-description init-type="LB" name="SimpleScaleApplication-lb">
+		<template id="LBNative"/>
+		<configurations>
+			<configuration name="https-port" value="50443"/>
+			<configuration name="ssl-enabled" value="false"/>
+			<configuration name="http-port" value="50081"/> <!-- poort gewijzigd van 50080 naar 50081, deze wordt in het paas-console opgepakt -->
+		</configurations>
+	</service-description>
+
+	<service-description name="basic-derby-db">
+
+		<characteristics>
+			<characteristic name="service-type" value="Database"/>
+<!-- 			<characteristic name="service-vendor" value="Apache"/> -->
+<!-- 			<characteristic name="service-product-name" value="Derby"/> -->
+<!-- 			<characteristic name="service-version" value="10.9.1.0"/> -->
+<!-- 			<characteristic name="os-name" value="Windows"/> -->
+		</characteristics>
+	
+		<configurations>
+			<configuration name="database.init.sql" value="tbl-init.sql"/>
+		</configurations>
+		
+	</service-description>
+</glassfish-services>
